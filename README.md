@@ -13,6 +13,8 @@
 | ------------------- | ------------------- | ------------- | ------- |
 | Yes | Yes (if you configure it in your Chartboost Dashboard | Yes and no. We don't have an official API to use Chartboost's reward videos. But you can make your own if you setup the logic yourself and simply display Interstitial Videos | No. Chartboost doesn't offer these. |
 
+![alt text](https://raw.githubusercontent.com/kjellconnelly/react-native-chartboost/master/ExampleView_ios.gif "ExampleView iOS")
+
 ## Getting started
 - Disclaimer: This package has many steps to get running. Not only do you have to install this package, but also Chartboost, setup an account/app with them. You also need to make sure dependencies are working within Xcode (iOS users) which may be a problem all in itself as Xcode has a lot of quirks.
 #### Step 1: install/save NPM package
