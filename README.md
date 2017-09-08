@@ -57,7 +57,7 @@ This package is not ready yet and has not been throughly tested. Do not use it u
 
 ## Usage
 ```javascript
-import RNChartboost from 'react-native-chartboost';
+import Chartboost from 'react-native-chartboost';
 
 // TODO: What to do with the module?
 RNChartboost;

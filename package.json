@@ -1,16 +1,16 @@
 
 {
   "name": "react-native-chartboost",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Display native Chartboost ads and get rich in the process.",
+  "main": "index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "react-native"
+    "react-native", "react", "native", "chartboost", "ads", "admob"
   ],
-  "author": "",
+  "author": "Kjell Connelly",
   "license": "",
   "peerDependencies": {
     "react-native": "^0.41.2",

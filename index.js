@@ -10,14 +10,13 @@ export default class Chartboost {
 	}
 
 	static showInterstitial(location, callbacks) {
-		const updatedCallbacks = Chartboost. showInt_EmptyCallbacks(callbacks)
+		const updatedCallbacks = Chartboost.showInt_EmptyCallbacks(callbacks)
     RNChartboost.showInterstitial(location, updatedCallbacks)
 	}
 
-	static cacheInterstitial(location, callback) {
-		RNChartboost.cacheInterstitial(location, callback2=>{
-			callback(errorCode)
-		})
+	static cacheInterstitial(location, callbacks) {
+		const updatedCallbacks = Chartboost.cache_EmptyCallbacks(callbacks)
+    RNChartboost.cacheInterstitial(location, updatedCallbacks)
 	}
 
 	static hasInterstitial(location, callback) {
@@ -30,7 +29,6 @@ export default class Chartboost {
 	static showInt_EmptyCallbacks(input) {
 		let callbacks = JSON.parse(JSON.stringify(input))
 		let keys = [
-			"shouldDisplayInterstitial",
 			"didDisplayInterstitial",
 			"didFailToLoadInterstitial",
 			"didDismissInterstitial",
@@ -45,7 +43,7 @@ export default class Chartboost {
 		return callbacks
 	}
 
-	staticCache_EmptyCallbacks(input) {
+	static cache_EmptyCallbacks(input) {
 		let callbacks = JSON.parse(JSON.stringify(input))
 		let keys = [
 			"didCacheInterstitial",
