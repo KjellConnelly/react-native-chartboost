@@ -1,6 +1,14 @@
-import {NativeModules} from 'react-native'
+import {NativeModules, NativeEventEmitter} from 'react-native'
 
 const RNChartboost = NativeModules.RNChartboost
+const keys = [
+	"didDisplayInterstitial",
+	"didFailToLoadInterstitial",
+	"didDismissInterstitial",
+	"didCloseInterstitial",
+	"didClickInterstitial",
+	"didCacheInterstitial",
+]
 
 export default class Chartboost {
 	static start(appID, signature, callback) {
@@ -9,50 +17,31 @@ export default class Chartboost {
 		})
 	}
 
-	static showInterstitial(location, callbacks) {
-		const updatedCallbacks = Chartboost.showInt_EmptyCallbacks(callbacks)
-    RNChartboost.showInterstitial(location, updatedCallbacks)
+	static setDelegateMethods(callbacks) {
+		const eventEmitter = new NativeEventEmitter(RNChartboost)
+		keys.forEach(key=>{
+			if (callbacks[key] != undefined){
+				const subscription = eventEmitter.addListener(key, callbackData=>{
+					const location = callbackData[1]
+					if (callbacks[key]) {
+						callbacks[key](callbackData.location)
+					}
+				})
+			}
+		})
 	}
 
-	static cacheInterstitial(location, callbacks) {
-		const updatedCallbacks = Chartboost.cache_EmptyCallbacks(callbacks)
-    RNChartboost.cacheInterstitial(location, updatedCallbacks)
+	static showInterstitial(location) {
+    RNChartboost.showInterstitial(location)
+	}
+
+	static cacheInterstitial(location) {
+    RNChartboost.cacheInterstitial(location)
 	}
 
 	static hasInterstitial(location, callback) {
 		RNChartboost.hasInterstitial(location, has=>{
 			callback(has)
 		})
-	}
-
-	// helper functions
-	static showInt_EmptyCallbacks(input) {
-		let callbacks = JSON.parse(JSON.stringify(input))
-		let keys = [
-			"didDisplayInterstitial",
-			"didFailToLoadInterstitial",
-			"didDismissInterstitial",
-			"didCloseInterstitial",
-			"didClickInterstitial"
-		]
-		keys.forEach(key=>{
-			if (callbacks[key] == undefined){
-				callbacks[key] = ()=>{}
-			}
-		})
-		return callbacks
-	}
-
-	static cache_EmptyCallbacks(input) {
-		let callbacks = JSON.parse(JSON.stringify(input))
-		let keys = [
-			"didCacheInterstitial",
-		]
-		keys.forEach(key=>{
-			if (callbacks[key] == undefined){
-				callbacks[key] = ()=>{}
-			}
-		})
-		return callbacks
 	}
 }

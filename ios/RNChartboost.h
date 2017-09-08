@@ -8,9 +8,11 @@
 #if __has_include("RCTBridgeModule.h")
     #import "RCTBridgeModule.h"
     #import "RCTConvert.h"
+    #import "RCTEventEmitter.h"
 #else
     #import <React/RCTBridgeModule.h>
     #import <React/RCTConvert.h>
+    #import <React/RCTEventEmitter.h>
 #endif
 
 #import <UIKit/UIKit.h>
@@ -18,6 +20,6 @@
 
 //"/Users/Developer/Desktop/iOSApps/DBT/DBT_React/ios/Chartboost.framework/Headers/Chartboost.h"
 
-@interface RNChartboost : NSObject <RCTBridgeModule, ChartboostDelegate>
+@interface RNChartboost : RCTEventEmitter <RCTBridgeModule, ChartboostDelegate>
 
 @end
