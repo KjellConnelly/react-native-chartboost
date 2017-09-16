@@ -44,9 +44,12 @@ compile project(':react-native-chartboost')
 ###### Manual Windows Method: Windows not supported yet
 #### Step 3: Add the Chartboost framework to your project
 - Download the SDK for the Platforms you are using the follow their integration steps: https://answers.chartboost.com/en-us/articles/download or https://www.chartboost.com
-- When you have downloaded the SDK, unzip it. For iOS users, drag Chartboost.framework into your_project/ios. Then drag that into Xcode.
+- When you have downloaded the SDK, unzip it. For iOS users, drag Chartboost.framework into your_project/ios. Then drag that into Xcode. Make sure it is in the Link Binary with Libraries part too. If not automatically put there, drag from within Xcode to that part.
 - You will to do most of their steps except writing any native code. You will our javascript API to run these methods. The steps may include linking frameworks like UIKit and CoreGraphics. You might even need to link WebKit.framework.
 - Remember to ignore any step that involve writing any native code (such as Objective C or Swift).
+
+Here is what my Link Binary With Libraries section looks like:
+![alt text](https://raw.githubusercontent.com/kjellconnelly/react-native-chartboost/master/xcodeLink.png "Link Binary with Libraries")
 
 #### Step 4: Make sure to have a Chartboost Account, Added an App to the Dashboard, and have an active publishing campaign
 - You will need all of these things in order to make money.
