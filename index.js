@@ -2,6 +2,7 @@ import {NativeModules, NativeEventEmitter} from 'react-native'
 
 const RNChartboost = NativeModules.RNChartboost
 const keys = [
+	"didInitialize",
 	"didDisplayInterstitial",
 	"didFailToLoadInterstitial",
 	"didDismissInterstitial",
@@ -11,10 +12,8 @@ const keys = [
 ]
 
 export default class Chartboost {
-	static start(appID, signature, callback) {
-		RNChartboost.start(appID, signature, (success)=>{
-			callback(success)
-		})
+	static start(appID, signature) {
+		RNChartboost.start(appID, signature);
 	}
 
 	static setDelegateMethods(callbacks) {
@@ -22,9 +21,12 @@ export default class Chartboost {
 		keys.forEach(key=>{
 			if (callbacks[key] != undefined){
 				const subscription = eventEmitter.addListener(key, callbackData=>{
-					const location = callbackData[1]
 					if (callbacks[key]) {
-						callbacks[key](callbackData.location)
+						if (key == "didInitialize") {
+							callbacks[key](callbackData.initSuccessful)
+						} else {
+							callbacks[key](callbackData.location)
+						}
 					}
 				})
 			}
