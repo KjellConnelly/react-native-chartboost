@@ -60,18 +60,19 @@ Here is what my Link Binary With Libraries section looks like:
 #### Static Functions, only use ONCE
 | function | example | notes |
 | -------- | ------- | ----- |
-|start(appID, signature, callback) | `Chartboost.start("54eq1", "47c2ddf", success=>{console.log(success))}) ` | Get your appID and signature from the Chartboost dashboard. Success will be false if you're unable to connect to the server, you have incorrect arguments, or something else. Update UI accordingly.
+|start(appID, signature) | `Chartboost.start("54eq1", "47c2ddf") ` | Get your appID and signature from the Chartboost dashboard. Make sure to setDelegateMethods first to get notified if initialization is successful.
 | setDelegateMethods(callbacks)| `Chartboost.setDelegateMethods({ didCacheInterstitial:()=>{ console.log("Successfully Cached"}})` | You can ignore this function if you don't care about being notified when certain things happen. Or you can add 1, 2, or any number of keys/values to this object for different events. Different events are explained below |
 
 | setDelegateMethods supported events | notes |
 | ----------------------------------- | ----- |
+| didInitialize | Called when it has been initialized. Sometimes is called more than once (like when it was called, and then a permissions for camera use popup happened). |
 | didDisplayInterstitial | Called after an interstitial has been displayed on the screen. |
 | didFailToLoadInterstitial | Called after an interstitial has attempted to load from the Chartboost API servers but failed. |
 | didDismissInterstitial | Called after an interstitial has been dismissed. |
 | didCloseInterstitial | Called after an interstitial has been closed. |
 | didClickInterstitial | Called after an interstitial has been clicked. |
 | didCacheInterstitial | Called after an interstitial has been loaded from the Chartboost API servers and cached locally. |
-*** Difference between didDismiss and didClose? I don't know. Wish the Chartboost documentation made more sense.
+*** Difference between didDismiss and didClose? When a user tap the X to close the ad, it fires both `didCloseInterstitial` and `didDismissInterstitial`. When a user taps the ad (and is taken to the AppStore), it fires both `didClickInterstitial` and `didDismissInterstitial`. So didDismiss is fired both times, so resume music/animations/whatever here. If you want to track if they clicked, or closed, then you can using the didClick/didClose events. I personally never use didClick/didClose.
 
 #### Static functions, use after start() has been called
 
@@ -101,6 +102,9 @@ export default class ExampleView extends React.Component {
 
 	componentDidMount() {
 		Chartboost.setDelegateMethods({
+			didInitialize:(initSuccessful)=>{
+				this.setState({initSuccessful:initSuccessful})
+		      	},
 			didCacheInterstitial:(location)=>{
 				this.setState({interstitialCached:"Successfully Cached: " + location})
 			},
@@ -120,9 +124,7 @@ export default class ExampleView extends React.Component {
 				this.setState({manyCallbacksStatus:"Interstitial clicked - You rich!",statusBarHidden:false})
 			}
 		})
-		Chartboost.start("5403bd3889b0bb6d9ff085b1", "47c2ddfe01dd7c4e535ae15902dd85ec70bdb672", (success)=>{
-			this.setState({chartboostStarted:success})
-		})
+		Chartboost.start("5403bd3889b0bb6d9ff085b1", "47c2ddfe01dd7c4e535ae15902dd85ec70bdb672")
 	}
 
 	render() {
