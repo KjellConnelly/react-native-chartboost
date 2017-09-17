@@ -2,10 +2,9 @@
 
 @implementation RNChartboost
 
-RCTResponseSenderBlock didInitializeCallback;
-
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"didDisplayInterstitial",
+    return @[@"didInitialize",
+             @"didDisplayInterstitial",
              @"didFailToLoadInterstitial",
              @"didDismissInterstitial",
              @"didCloseInterstitial",
@@ -16,8 +15,7 @@ RCTResponseSenderBlock didInitializeCallback;
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(start: (NSString *)appID : (NSString *)signature : (RCTResponseSenderBlock)callback) {
-    didInitializeCallback = callback;
+RCT_EXPORT_METHOD(start: (NSString *)appID : (NSString *)signature) {
     [Chartboost startWithAppId:appID appSignature:signature delegate:self];
 }
 
@@ -38,7 +36,8 @@ RCT_EXPORT_METHOD(hasInterstitial: (NSString *)location :  (RCTResponseSenderBlo
 // Delegate Methods
 
 - (void)didInitialize:(BOOL)status {
-    didInitializeCallback(@[[NSNumber numberWithBool:status]]);
+    //didInitializeCallback(@[[NSNumber numberWithBool:status]]);
+    [self sendEventWithName:@"didInitialize" body:@{@"initSuccessful": [NSNumber numberWithBool:status]}];
 }
 
 - (void)didDisplayInterstitial:(CBLocation)location {
