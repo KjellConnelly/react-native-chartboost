@@ -5,7 +5,8 @@
   "description": "Display native Chartboost ads and get rich in the process.",
   "main": "index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "npm version patch && git add . && git commit -am \"Next Version\" && git push && npm publish"
   },
   "keywords": [
     "react-native", "react", "native", "chartboost", "ads", "admob"
@@ -13,6 +14,6 @@
   "author": "Kjell Connelly",
   "license": "MIT",
   "peerDependencies": {
-
+    "react-native": "^0.41.2"
   }
 }
