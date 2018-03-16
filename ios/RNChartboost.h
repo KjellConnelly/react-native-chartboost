@@ -16,9 +16,9 @@
 #endif
 
 #import <UIKit/UIKit.h>
-#import <Chartboost/Chartboost.h> 
+#import <Chartboost/Chartboost.h>
 
-//"/Users/Developer/Desktop/iOSApps/DBT/DBT_React/ios/Chartboost.framework/Headers/Chartboost.h"
+// "/Users/Developer/Desktop/iOSApps/DBT/DBT_React/ios/Chartboost.framework/Headers/Chartboost.h"
 
 @interface RNChartboost : RCTEventEmitter <RCTBridgeModule, ChartboostDelegate>
 

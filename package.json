@@ -1,7 +1,6 @@
-
 {
   "name": "react-native-chartboost",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Display native Chartboost ads and get rich in the process.",
   "main": "index",
   "scripts": {
@@ -9,7 +8,12 @@
     "deploy": "npm --no-git-tag-version version patch && git add . && git commit -am \"Next Version\" && git push && npm publish"
   },
   "keywords": [
-    "react-native", "react", "native", "chartboost", "ads", "admob"
+    "react-native",
+    "react",
+    "native",
+    "chartboost",
+    "ads",
+    "admob"
   ],
   "author": "Kjell Connelly",
   "license": "MIT",
