@@ -5,14 +5,14 @@
 //  Copyright © 2017 POP POP LLC. All rights reserved.
 //
 
-#if __has_include("RCTBridgeModule.h")
-    #import "RCTBridgeModule.h"
-    #import "RCTConvert.h"
-    #import "RCTEventEmitter.h"
-#else
+#if __has_include(<React/RCTBridgeModule.h>)
     #import <React/RCTBridgeModule.h>
     #import <React/RCTConvert.h>
     #import <React/RCTEventEmitter.h>
+#else
+    #import "RCTBridgeModule.h"
+    #import "RCTConvert.h"
+    #import "RCTEventEmitter.h"
 #endif
 
 #import <UIKit/UIKit.h>
