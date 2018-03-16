@@ -1,6 +1,6 @@
 {
   "name": "react-native-chartboost",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Display native Chartboost ads and get rich in the process.",
   "main": "index",
   "scripts": {

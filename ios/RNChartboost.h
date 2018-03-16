@@ -11,10 +11,6 @@
   #import <React/RCTBridgeModule.h>
   #import <React/RCTConvert.h>
   #import <React/RCTEventEmitter.h>
-#elif __has_include("RCTBridgeModule.h")
-  #import "RCTBridgeModule.h"
-  #import "RCTConvert.h"
-  #import "RCTEventEmitter.h"
 #else
   #import "RCTBridgeModule.h"
   #import "RCTConvert.h"
@@ -23,8 +19,6 @@
 
 #import <UIKit/UIKit.h>
 #import <Chartboost/Chartboost.h>
-
-// "/Users/Developer/Desktop/iOSApps/DBT/DBT_React/ios/Chartboost.framework/Headers/Chartboost.h"
 
 @interface RNChartboost : RCTEventEmitter <RCTBridgeModule, ChartboostDelegate>
 
