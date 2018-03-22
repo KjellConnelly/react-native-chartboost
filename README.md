@@ -1,12 +1,12 @@
 
 # react-native-chartboost
 
-#### Chartboost SDK Tested with 7.0 (9/8/17)
+#### Chartboost iOS SDK Tested with 7.0 (9/8/17) & Android SDK 7.0.1 (3/15/18)
 
 #### Works for:
 | iOS | Android | Windows |
 |----|----|----|
-| Yes | Soon | Probably never |
+| Yes | Somewhat. Working on adding delegate methods. | Probably never |
 
 #### Displays:
 | Interstitial Images | Interstitial Videos | Reward Videos | Banners |
@@ -28,7 +28,8 @@
 2. Go to `node_modules` ➜ `react-native-chartboost` and add `RNChartboost.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNChartboost.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. If you have more than one target, repeat step 3 for each target.
-###### Manual Android Method
+###### Manual Android Method (Part 1/2)
+- Part 1 should be configured automatically if you did ```react-native link react-native-chartboost```. Part 2/2 still needs to be done manually.
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
 - Add `import com.RNChartboost.RNChartboostPackage;` to the imports at the top of the file
 - Add `new RNChartboostPackage()` to the list returned by the `getPackages()` method
@@ -41,14 +42,77 @@ project(':react-native-chartboost').projectDir = new File(rootProject.projectDir
 ```
 compile project(':react-native-chartboost')
 ```
+
+###### Manual Android Method (Part 2/2)
+- Due to the way the Android Chartboost SDK was created, you need to initialize it in your ```MainActivity.java``` file. We tried to find a way for it to work after the initial Activity was created, but unfortunately, could not find a way. For this reason, you will need to add this native Java code in your ```MainActivity.java``` file. We override a bunch of methods. First, add these imports to the top of your file if you don't already have them:
+
+```java
+import com.RNChartboost.RNChartboostPackage;
+import android.os.Bundle;
+```
+
+Next, override the following methods as shown below. If you already override them, just make sure you call the RNChartboostPackage methods within them. Technically you only need to the onCreate and onStart methods, but since Chartboost recommends adding all of them, we will:
+
+```java
+public class MainActivity extends ReactActivity {
+	//... whatever you have already
+
+	@Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    RNChartboostPackage.ONCREATE(this, "Chartboost Android appId", "Chartboost Android app Signature");
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    RNChartboostPackage.ONSTART(this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    RNChartboostPackage.ONRESUME(this);
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    RNChartboostPackage.ONPAUSE(this);
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    RNChartboostPackage.ONSTOP(this);
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    RNChartboostPackage.ONDESTROY(this);
+  }
+
+	@Override
+  public void onBackPressed() {
+    if (RNChartboostPackage.ONBACKPRESSED())
+      return;
+    else
+      super.onBackPressed();
+  }
+}
+```
+
+As you can see, in the onCreate method, you will need to add your app's appId and signature here. These can be found once you've created your Android app on Chartboost's website.
+
 ###### Manual Windows Method: Windows not supported yet
 #### Step 3: Add the Chartboost framework to your project
-- Download the SDK for the Platforms you are using the follow their integration steps: https://answers.chartboost.com/en-us/articles/download or https://www.chartboost.com
-- When you have downloaded the SDK, unzip it. For iOS users, drag Chartboost.framework into your_project/ios. Then drag that into Xcode. Make sure it is in the Link Binary with Libraries part too. If not automatically put there, drag from within Xcode to that part.
-- You will to do most of their steps except writing any native code. You will our javascript API to run these methods. The steps may include linking frameworks like UIKit and CoreGraphics. You might even need to link WebKit.framework.
-- Remember to ignore any step that involve writing any native code (such as Objective C or Swift).
+- Download the SDK for iOS apps and use the follow their integration steps: https://answers.chartboost.com/en-us/articles/download or https://www.chartboost.com
+- When you have downloaded the SDK, unzip it. For iOS users, drag Chartboost.framework into your_project/ios. Then drag that into Xcode. Make sure it is in the Link Binary with Libraries part too. If not automatically put there, drag from within Xcode to that part. Android users can simply use the ```.jar``` file that is in this project. Or if you want something above ```v7.0.1```, you can replace it inside the libs folder.
+- For iOS, you will to do most of their steps except writing any native code. You will our javascript API to run these methods. The steps may include linking frameworks like UIKit and CoreGraphics. You might even need to link WebKit.framework. Remember to ignore any step that involve writing any native code (such as Objective C or Swift).
+- For Android, you won't need to add the framework, but you will need to add native code. See above for instructions (Manual Android Method (Part 2/2)).
 
-Here is what my Link Binary With Libraries section looks like:
+Here is what my Link Binary With Libraries section looks like in Xcode (iOS):
 ![alt text](https://raw.githubusercontent.com/kjellconnelly/react-native-chartboost/master/xcodeLink.png "Link Binary with Libraries")
 
 #### Step 4: Make sure to have a Chartboost Account, Added an App to the Dashboard, and have an active publishing campaign
@@ -60,7 +124,7 @@ Here is what my Link Binary With Libraries section looks like:
 #### Static Functions, only use ONCE
 | function | example | notes |
 | -------- | ------- | ----- |
-|start(appID, signature) | `Chartboost.start("54eq1", "47c2ddf") ` | Get your appID and signature from the Chartboost dashboard. Make sure to setDelegateMethods first to get notified if initialization is successful.
+|start(appID, signature) | `Chartboost.start("54eq1", "47c2ddf") ` | Get your appID and signature from the Chartboost dashboard. Make sure to setDelegateMethods first to get notified if initialization is successful. iOS only. Android needs to be started via Native Java Code.
 | setDelegateMethods(callbacks)| `Chartboost.setDelegateMethods({ didCacheInterstitial:()=>{ console.log("Successfully Cached"}})` | You can ignore this function if you don't care about being notified when certain things happen. Or you can add 1, 2, or any number of keys/values to this object for different events. Different events are explained below |
 
 | setDelegateMethods supported events | notes |
@@ -124,6 +188,8 @@ export default class ExampleView extends React.Component {
 				this.setState({manyCallbacksStatus:"Interstitial clicked - You rich!",statusBarHidden:false})
 			}
 		})
+
+		// Note that this only works for iOS as for Android, you will need to add native code into your MainActivity.java file
 		Chartboost.start("5403bd3889b0bb6d9ff085b1", "47c2ddfe01dd7c4e535ae15902dd85ec70bdb672")
 	}
 

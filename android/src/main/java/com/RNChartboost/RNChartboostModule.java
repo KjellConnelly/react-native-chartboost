@@ -34,13 +34,14 @@ public class RNChartboostModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void start(String appID, String signature) {
+    System.out.println("react-native-chartboost's android start() function does nothing in Android. Make sure you setup your MainActivity.java properly if you haven't already.");
+    /* The following code theoretically should work, but since it's not in the onCreate() method, it doesn't work.
+
     Activity activity = getCurrentActivity();
-    System.out.println("Printing Activity");
-    System.out.println(activity);
-    System.out.println("DONE Printing Activity");
     Chartboost.startWithAppId(getCurrentActivity(), appID, signature);
     Chartboost.setDelegate(delegate);
     Chartboost.onCreate(getCurrentActivity());
+    */
   }
 
   @ReactMethod
@@ -165,7 +166,8 @@ public class RNChartboostModule extends ReactContextBaseJavaModule {
 
       @Override
       public void didInitialize() {
-          addToUILog("Chartboost SDK is initialized and ready!");
+        addToUILog("Chartboost SDK is initialized and ready!");
+        sendEvent(this.reactContext, "didInitialize", true);
       }
   };
 }
