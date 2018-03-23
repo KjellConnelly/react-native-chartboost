@@ -106,9 +106,9 @@ public class MainActivity extends ReactActivity {
 As you can see, in the onCreate method, you will need to add your app's appId and signature here. These can be found once you've created your Android app on Chartboost's website.
 
 ###### Manual Windows Method: Windows not supported yet
-#### Step 3: Add the Chartboost framework to your project
+#### Step 3: Add the Chartboost framework to your project (ios)
 - Download the SDK for iOS apps and use the follow their integration steps: https://answers.chartboost.com/en-us/articles/download or https://www.chartboost.com
-- When you have downloaded the SDK, unzip it. For iOS users, drag Chartboost.framework into your_project/ios. Then drag that into Xcode. Make sure it is in the Link Binary with Libraries part too. If not automatically put there, drag from within Xcode to that part. Android users can simply use the ```.jar``` file that is in this project. Or if you want something above ```v7.0.1```, you can replace it inside the libs folder.
+- When you have downloaded the SDK, unzip it. For iOS users, drag Chartboost.framework into your_project/ios. Then drag that into Xcode. Make sure it is in the Link Binary with Libraries part too. If not automatically put there, drag from within Xcode to that part. Android users can simply use the ```.jar``` file that is in this React Natuve Module. Or if you want something above ```v7.0.1```, you can replace it inside the libs folder.
 - For iOS, you will to do most of their steps except writing any native code. You will our javascript API to run these methods. The steps may include linking frameworks like UIKit and CoreGraphics. You might even need to link WebKit.framework. Remember to ignore any step that involve writing any native code (such as Objective C or Swift).
 - For Android, you won't need to add the framework, but you will need to add native code. See above for instructions (Manual Android Method (Part 2/2)).
 
@@ -129,7 +129,7 @@ Here is what my Link Binary With Libraries section looks like in Xcode (iOS):
 
 | setDelegateMethods supported events | notes |
 | ----------------------------------- | ----- |
-| didInitialize | Called when it has been initialized. Sometimes is called more than once (like when it was called, and then a permissions for camera use popup happened). |
+| didInitialize | Called when it has been initialized. Sometimes is called more than once (like when it was called, and then a permissions for camera use popup happened). *** Callback will only be called on iOS since the Android Chartboost SDK is initialized in native code before your React Native app has started. |
 | didDisplayInterstitial | Called after an interstitial has been displayed on the screen. |
 | didFailToLoadInterstitial | Called after an interstitial has attempted to load from the Chartboost API servers but failed. |
 | didDismissInterstitial | Called after an interstitial has been dismissed. |
@@ -150,8 +150,7 @@ Here is what my Link Binary With Libraries section looks like in Xcode (iOS):
 ```javascript
 import React, { Component } from 'react'
 import { View, Button, TouchableOpacity, Text, Platform, ScrollView, StatusBar} from 'react-native'
-import Chartboost from './index'
-// you will import Chartboost from 'react-native-chartboost'
+import Chartboost from 'react-native-chartboost'
 
 export default class ExampleView extends React.Component {
 	constructor(props) {
