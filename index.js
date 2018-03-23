@@ -1,4 +1,4 @@
-import {NativeModules, NativeEventEmitter} from 'react-native'
+import {NativeModules, NativeEventEmitter, DeviceEventEmitter, Platform} from 'react-native'
 
 const RNChartboost = NativeModules.RNChartboost
 const keys = [
@@ -17,7 +17,7 @@ export default class Chartboost {
 	}
 
 	static setDelegateMethods(callbacks) {
-		const eventEmitter = new NativeEventEmitter(RNChartboost)
+		const eventEmitter = Platform.OS == 'ios' ? new NativeEventEmitter(RNChartboost) : DeviceEventEmitter
 		keys.forEach(key=>{
 			if (callbacks[key] != undefined){
 				const subscription = eventEmitter.addListener(key, callbackData=>{

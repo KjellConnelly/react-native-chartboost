@@ -124,7 +124,7 @@ Here is what my Link Binary With Libraries section looks like in Xcode (iOS):
 #### Static Functions, only use ONCE
 | function | example | notes |
 | -------- | ------- | ----- |
-|start(appID, signature) | `Chartboost.start("54eq1", "47c2ddf") ` | Get your appID and signature from the Chartboost dashboard. Make sure to setDelegateMethods first to get notified if initialization is successful. iOS only. Android needs to be started via Native Java Code.
+|start(appID, signature) | `Chartboost.start("54eq1", "47c2ddf") ` | Get your appID and signature from the Chartboost dashboard. Make sure to setDelegateMethods first to get notified if initialization is successful. *** Note that for iOS, the appID and signature matters here, but for Android, you need to have that in your MainApplication.java file. But you still need to call ```start()``` for android since it will bind your delegate methods.
 | setDelegateMethods(callbacks)| `Chartboost.setDelegateMethods({ didCacheInterstitial:()=>{ console.log("Successfully Cached"}})` | You can ignore this function if you don't care about being notified when certain things happen. Or you can add 1, 2, or any number of keys/values to this object for different events. Different events are explained below |
 
 | setDelegateMethods supported events | notes |

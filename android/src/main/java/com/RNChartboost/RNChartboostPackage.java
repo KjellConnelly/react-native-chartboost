@@ -33,7 +33,6 @@ public class RNChartboostPackage implements ReactPackage {
   public static void ONCREATE(Activity activity, String appId, String appSignature) {
     Chartboost.startWithAppId(activity, appId, appSignature);
     Chartboost.onCreate(activity);
-    Chartboost.onStart(activity);
   }
 
   public static void ONSTART(Activity activity) {
