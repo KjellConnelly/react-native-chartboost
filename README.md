@@ -105,6 +105,28 @@ public class MainActivity extends ReactActivity {
 
 As you can see, in the onCreate method, you will need to add your app's appId and signature here. These can be found once you've created your Android app on Chartboost's website.
 
+- Now update your ```AndroidManifest.xml``` file. You'll need to add certain normal permissions (don't worry, you won't need to manually ask the user to accept permissions for normal permission, only dangerous ones). You'll also need to add a chartboost ```activity``` tag inside of ```application```. Below is basically what you need inside your manifest:
+
+```xml
+<manifest ...blablabla...>
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+	<application ...blababla...>
+
+		<activity android:name="com.chartboost.sdk.CBImpressionActivity"
+		  android:excludeFromRecents="true"
+		  android:hardwareAccelerated="true"
+		  android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+		  android:configChanges="keyboardHidden|orientation|screenSize" />
+
+	</application>
+</manifest>
+```
+
 ###### Manual Windows Method: Windows not supported yet
 #### Step 3: Add the Chartboost framework to your project (ios)
 - Download the SDK for iOS apps and use the follow their integration steps: https://answers.chartboost.com/en-us/articles/download or https://www.chartboost.com
