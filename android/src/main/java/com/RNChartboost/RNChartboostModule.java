@@ -185,8 +185,17 @@ public class RNChartboostModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void showInterstitial(String location) {
-    Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
-    System.out.println("showInterstitial: " + location + " " + getCurrentActivity());
+    Chartboost.showInterstitial(location);
+  }
+
+  @ReactMethod
+  public void cacheInterstitial(String location) {
+    Chartboost.cacheInterstitial(location);
+  }
+
+  @ReactMethod
+  public void hasInterstitial(String location, final Callback callback) {
+    callback.invoke(Chartboost.hasInterstitial(location));
   }
 
   public void addToUILog(final String message) {
