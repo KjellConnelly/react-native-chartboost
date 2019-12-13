@@ -1,6 +1,6 @@
 {
   "name": "react-native-chartboost",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "description": "Display native Chartboost ads and get rich in the process.",
   "main": "index",
   "scripts": {
@@ -16,8 +16,5 @@
     "admob"
   ],
   "author": "Kjell Connelly",
-  "license": "MIT",
-  "peerDependencies": {
-    "react-native": "^0.41.2"
-  }
+  "license": "MIT"
 }
